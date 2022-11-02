@@ -1,4 +1,3 @@
-import imp
 from .models import Cart, CartItem
 from .views import cart_id
 
@@ -9,7 +8,11 @@ def counter(request):
     else:
         try:
             cart = Cart.objects.filter(cart_id=cart_id(request))
-            cart_items = CartItem.objects.filter(cart=cart.first())
+            if request.user.is_authenticated:
+                cart_items = CartItem.objects.filter(user=request.user)
+            else:
+                
+                cart_items = CartItem.objects.filter(cart=cart[:1])
             if cart_items:
                 for cart_item in cart_items:
                     cart_count += cart_item.quantity
