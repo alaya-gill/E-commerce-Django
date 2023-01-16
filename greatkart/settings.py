@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 from django.contrib.messages import constants as messages
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = '=5(pxt^=g$ra^1y8j0qa34biyh!et4us+#6^@yja%xy01ga*39'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -43,7 +44,8 @@ INSTALLED_APPS = [
     'accounts',
     'store',
     'carts',
-    'orders'
+    'orders',
+    'admin_honeypot'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +56,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
+
+SESSION_EXPIRE_SECONDS = 1800  # 1 hour
+
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+SESSION_TIMEOUT_REDIRECT ='account/login/'
 
 ROOT_URLCONF = 'greatkart.urls'
 
@@ -141,9 +150,9 @@ MESSAGE_TAGS = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL='gillalaya@gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'gillalaya@gmail.com'
-EMAIL_HOST_PASSWORD = 'rpjxyptehcfspsgb'
+DEFAULT_FROM_EMAIL=config('DEFAULT_FROM_EMAIL')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
