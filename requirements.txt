@@ -13,7 +13,7 @@ django-admin-honeypot-updated-2021==1.2.0
 django-admin-thumbnails==0.2.6
 django-extensions==3.1.5
 django-session-timeout==0.1.0
-django-storages==1.13.2
+django-storages==1.12.3
 executing==0.10.0
 idna==3.4
 ipython==8.4.0
