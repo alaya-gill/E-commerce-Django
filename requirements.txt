@@ -3,6 +3,8 @@ asttokens==2.0.8
 autopep8==1.6.0
 backcall==0.2.0
 backports.zoneinfo==0.2.1
+boto3==1.26.54
+botocore==1.29.54
 certifi==2022.9.24
 charset-normalizer==2.1.1
 decorator==5.1.1
@@ -11,6 +13,7 @@ django-admin-honeypot-updated-2021==1.2.0
 django-admin-thumbnails==0.2.6
 django-extensions==3.1.5
 django-session-timeout==0.1.0
+django-storages==1.13.2
 executing==0.10.0
 idna==3.4
 ipython==8.4.0
